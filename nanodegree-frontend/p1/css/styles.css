@@ -1,0 +1,95 @@
+body {
+  font-family: 'Montserrat', san-serif;
+  height:100vh;
+  color: #3d4e5f;
+}
+
+h2, h3, h4, h5{
+  color: #456e7e;
+}
+
+.profile-title{
+  padding: 10px;
+  text-align: right;
+  border-bottom: 1px dotted #456e7e;
+}
+
+.logo{
+  width: 50px;
+  float: left;
+}
+
+h2, h3, h4, h5{
+  color: #456e7e;
+}
+
+/* main */
+.colors-container {
+  display: flex;
+  flex-flow: column;
+  margin-top: 15px;
+}
+
+.color-item {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.color-square{
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 2px auto;
+}
+
+.color-square.primary{
+  background: #4ECDC4;
+}
+
+.color-square.secondary{
+  background: #FF6B6B;
+}
+
+.color-square.text{
+  background: #556270;
+}
+
+.color-hexa{
+  text-align: center;
+  font-size: 10px;
+}
+
+.cover-img{
+  min-width: auto;
+  margin: 15px 0;
+}
+
+.deliverable-info{
+  margin-bottom: 15px;
+  background-color: #fdfdfd;
+}
+
+img.deliverable-img{
+  margin-bottom: 10px;
+}
+
+/* footer */
+footer {
+  width: 100vw;
+  max-height: 80px;
+  background-color: #556270;
+  color: #fff;
+  text-align: center;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 45px;
+}
+
+i.fas.fa-heart{
+  color: #FF6B6B;
+}
+i.fas.fa-coffee{
+  color: #4ECDC4;
+}
