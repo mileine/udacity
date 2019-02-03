@@ -28,7 +28,7 @@ h2, h3, h4, h5{
 }
 
 /* main */
-.colors-container {
+.color-container {
   display: flex;
   flex-flow: column;
   margin-top: 15px;
