@@ -5,7 +5,7 @@ This repo contains projects developed for Udacity Nanodegrees.
 
 The projects for Front-End Development Nanodegree will be available at:
 
-:file_folder: __udacity__ (repo)/nanodegree-frontend/p1/
+:file_folder: __udacity__ (this repo)/nanodegree-frontend/
 
 - P1 - Portfolio Site ([view code](https://github.com/mileine/udacity/tree/master/nanodegree-frontend/p1))
 - P2 - Memory Game (WIP - DUE FEB 24)
