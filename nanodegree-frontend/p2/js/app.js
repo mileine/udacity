@@ -1,3 +1,12 @@
+
+const NUMBER_OF_MATCHES = 8;
+const deck = document.querySelector(".deck");
+let movesLabel = document.querySelector(".moves");
+let moves = 0;
+let activeMove = false;
+let openCards = 0;
+let openCardsArray = [];
+let numberOfMatches = 0;
 /*
  * Create a list that holds all of your cards
  */
@@ -14,6 +23,7 @@
    refreshCards();
  });
 
+
 // Added event listener on restart button
 const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
@@ -29,9 +39,10 @@ function removeAllCards(cardsList){
 
 // Display cards on deck
 function displayNewCards(cardsArray){
-  let deck = document.querySelector(".deck");
   for (var i = 0; i < cardsArray.length; i++){
-    console.log("newcard["+i+"]");
+    cardsArray[i].classList.remove('match');
+    cardsArray[i].classList.remove('open');
+    cardsArray[i].classList.remove('show');
     deck.appendChild(cardsArray[i]);
   }
 }
@@ -43,6 +54,8 @@ function refreshCards(){
   cardsArray = shuffle(cardsArray);
   removeAllCards(cardsList);
   displayNewCards(cardsArray);
+  movesLabel.innerText = "0";
+  console.log(movesLabel);
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -59,6 +72,7 @@ function shuffle(array) {
 }
 
 
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -69,3 +83,72 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ function updateMoves(){
+   moves++;
+   movesLabel.innerText = moves;
+ }
+
+ function hideCards(){
+   openCardsArray[0].classList.remove('no-match');
+   openCardsArray[1].classList.remove('no-match');
+   openCards = 0;
+   openCardsArray = [];
+ }
+
+ function setMatch(){
+   numberOfMatches++;
+   openCardsArray[0].classList.remove('open');
+   openCardsArray[0].classList.remove('show');
+   openCardsArray[1].classList.remove('open');
+   openCardsArray[1].classList.remove('show');
+   openCardsArray[0].classList.add('match');
+   openCardsArray[1].classList.add('match');
+   openCards = 0;
+   openCardsArray = [];
+   if(numberOfMatches == NUMBER_OF_MATCHES){
+       console.log('Congrats! You won! =)');
+   }
+ }
+
+ function setNoMatch(){
+   openCardsArray[0].classList.remove('open');
+   openCardsArray[0].classList.remove('show');
+   openCardsArray[1].classList.remove('open');
+   openCardsArray[1].classList.remove('show');
+   openCardsArray[0].classList.add('no-match');
+   openCardsArray[1].classList.add('no-match');
+
+   setTimeout(() => { hideCards()
+   }, 1500);
+ }
+
+ function checkMatch(){
+   if(openCardsArray[0].firstElementChild.className.includes(openCardsArray[1].firstElementChild.className)){
+     setMatch();
+   }
+   else {
+     setNoMatch();
+   }
+   updateMoves();
+ }
+
+ // Decide which action to take on card click
+ function evaluateCard(card){
+   if ((!(card.className.includes("open")) && !(card.className.includes("match")) && (openCards < 2))){
+     openCards++;
+     card.className += " open show";
+     openCardsArray.push(card);
+   }
+   if(openCards == 2){
+     checkMatch();
+   }
+ }
+
+ deck.addEventListener('click', function(event) {
+   if(event.target.nodeName == 'I'){
+     evaluateCard(event.target.parentNode);
+   }else if(event.target.nodeName == 'LI'){
+     evaluateCard(event.target);
+   }
+ });
