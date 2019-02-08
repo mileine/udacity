@@ -55,6 +55,7 @@ function refreshCards(){
   removeAllCards(cardsList);
   displayNewCards(cardsArray);
   movesLabel.innerText = "0";
+  moves = 0;
   console.log(movesLabel);
 }
 
