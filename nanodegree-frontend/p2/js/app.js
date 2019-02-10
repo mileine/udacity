@@ -56,6 +56,8 @@ function refreshCards(){
   displayNewCards(cardsArray);
   movesLabel.innerText = "0";
   moves = 0;
+  openCards = 0;
+  openCardsArray = [];
   console.log(movesLabel);
 }
 
