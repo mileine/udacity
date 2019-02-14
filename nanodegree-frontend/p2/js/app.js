@@ -1,16 +1,20 @@
-
-const NUMBER_OF_MATCHES = 8;
-const deck = document.querySelector(".deck");
-let movesLabel = document.querySelector(".moves");
-let moves = 0;
-let activeMove = false;
-let openCards = 0;
-let openCardsArray = [];
-let numberOfMatches = 0;
 /*
- * Create a list that holds all of your cards
+ * Global variables
  */
+ const MAX_NUMBER_OF_MATCHES = 8;
 
+ let timer;
+ let seconds = 0;
+ let moves = 0;
+ let numberOfMatches = 0;
+ let openCards = 0;
+ let openCardsArray = [];
+
+ let scoreModal = document.querySelector("#score-modal");
+ let movesLabels = document.querySelectorAll(".moves");
+ let minutesTxts = document.querySelectorAll(".minutes");
+ let secondsTxts = document.querySelectorAll(".seconds");
+ let deck = document.querySelector(".deck");
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -18,16 +22,17 @@ let numberOfMatches = 0;
  *   - add each card's HTML to the page
  */
 
- // Updates cards on deck when page is loaded
+// Updates cards on deck when page is loaded
  document.addEventListener("DOMContentLoaded", function(event) {
-   refreshCards();
+   startNewGame();
  });
 
 
 // Added event listener on restart button
 const restartBtn = document.querySelector('.restart');
 restartBtn.addEventListener('click', function () {
-  refreshCards();
+  clearTimeout(timer);
+  startNewGame();
 });
 
 // Removes all cards from deck
@@ -48,33 +53,70 @@ function displayNewCards(cardsArray){
 }
 
 // Updates cards list for new game when page loads or when clicking on restart button
-function refreshCards(){
+function resetCards(){
   let cardsList = document.querySelectorAll(".card");
   let cardsArray = Array.prototype.slice.call(cardsList);
   cardsArray = shuffle(cardsArray);
-  removeAllCards(cardsList);
-  displayNewCards(cardsArray);
-  movesLabel.innerText = "0";
-  moves = 0;
   openCards = 0;
   openCardsArray = [];
-  console.log(movesLabel);
+  numberOfMatches = 0
+  removeAllCards(cardsList);
+  displayNewCards(cardsArray);
+}
+
+function startNewGame(){
+  resetCards();
+  resetMoves();
+  resetTimerDisplay();
+  timer = setInterval(() => { updateTimer()
+  }, 1000);
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-    return array;
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 }
 
-
+function resetTimerDisplay(){
+  seconds = 0;
+  updateMinutesDisplay("00");
+  updateSecondsDisplay("00");
+}
+function updateMinutesDisplay(minStr){
+  for(const minutesTxt of minutesTxts){
+    minutesTxt.innerText = minStr;
+  }
+}
+function updateSecondsDisplay(secStr){
+  for(const secondsTxt of secondsTxts){
+    secondsTxt.innerText = secStr;
+  }
+}
+function updateTimer(){
+  seconds++;
+  if(seconds < 60){
+    if(seconds<10)
+      updateSecondsDisplay("0" + seconds.toString());
+    else
+      updateSecondsDisplay(seconds.toString());
+  }
+  else{
+      let secondsTimer = seconds%60;
+      updateMinutesDisplay(Math.floor(seconds/60).toString());
+      if(secondsTimer<10)
+        updateSecondsDisplay("0" + secondsTimer.toString());
+      else
+        updateSecondsDisplay((secondsTimer).toString());
+  }
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -86,10 +128,18 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+ function resetMoves(){
+   moves = 0;
+   for(const movesLabel of movesLabels){
+     movesLabel.innerText = "0";
+   }
+ }
 
  function updateMoves(){
    moves++;
-   movesLabel.innerText = moves;
+   for(const movesLabel of movesLabels){
+     movesLabel.innerText = moves;
+   }
  }
 
  function hideCards(){
@@ -109,8 +159,10 @@ function shuffle(array) {
    openCardsArray[1].classList.add('match');
    openCards = 0;
    openCardsArray = [];
-   if(numberOfMatches == NUMBER_OF_MATCHES){
-       console.log('Congrats! You won! =)');
+   // check if game was won
+   if(numberOfMatches == MAX_NUMBER_OF_MATCHES){
+      scoreModal.style.display = "block";
+      clearTimeout(timer);
    }
  }
 
@@ -155,3 +207,21 @@ function shuffle(array) {
      evaluateCard(event.target);
    }
  });
+
+/*
+*  Setting score modal buttons behaviors
+*/
+// hide score modal
+let btnModalClose = document.querySelector(".btn-modal-close");
+btnModalClose.addEventListener('click', function(event)
+{
+  scoreModal.style.display = "none";
+});
+
+// hide score modal and restart game
+let btnModalRestart = document.querySelector(".btn-modal-restart");
+btnModalRestart.addEventListener('click', function(event)
+{
+  scoreModal.style.display = "none";
+  startNewGame();
+});

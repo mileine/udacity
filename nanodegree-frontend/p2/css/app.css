@@ -33,6 +33,7 @@ h1 {
     font-weight: 300;
 }
 
+
 /*
  * Styles for the deck of cards
  */
@@ -91,6 +92,8 @@ h1 {
  */
 
 .score-panel {
+    display: flex;
+    justify-content: space-between;
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
@@ -111,4 +114,23 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.score-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.score-modal-content {
+  background-color: #fafafa;
+  margin: 20% auto;
+  padding: 20px;
+  border: 1px solid green;
+  width: 400px;
 }
