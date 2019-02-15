@@ -182,6 +182,7 @@ function updateTimer(){
  }
 
 function resetScore(){
+  numberOfErrors = 0;
   let starErrorList = document.querySelectorAll(".fa-star-o");
   let starErrorArray = Array.prototype.slice.call(starErrorList);
   if(starErrorArray.length > 0){
