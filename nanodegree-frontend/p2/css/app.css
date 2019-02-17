@@ -39,54 +39,77 @@ h1 {
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 32px;
-    border-radius: 10px;
-    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 3em;
+  width: 660px;
+  min-height: 680px;
+  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 3em;
+  perspective: 1000px;
 }
 
-.deck .card {
-    height: 125px;
-    width: 125px;
-    background: #2e3d49;
-    font-size: 0;
-    color: #ffffff;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+
+.card {
+  height: 125px;
+  width: 125px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  /* transform-origin: center right; */
 }
 
-.deck .card.open {
-    transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
+/* .card-container{
+  perspective: 1000px;
+  height: 125px;
+  width: 125px;
+} */
+
+.card__face{
+  position: absolute;
+  border-radius: 8px;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
 }
 
-.deck .card.show {
-    font-size: 33px;
+.card__face--closed{
+  background: #2e3d49;
+  transform: rotateY(180deg);
 }
 
-.deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
+.card__face--open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 33px;
+  color: #ffffff;
+  background: #02b3e4;
 }
 
-.deck .card.no-match {
-    cursor: default;
-    background: red;
-    font-size: 33px;
+.card.is-open{
+  transform: rotateY(0deg);
 }
+
+.card.is-closed{
+  transform: rotateY(-180deg);
+}
+
+.match {
+  background: #02ccba;
+}
+
+.no-match {
+  background: red;
+}
+
 /*
  * Styles for the Score Panel
  */

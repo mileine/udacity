@@ -31,13 +31,22 @@
    startNewGame();
  });
 
-
-// Added event listener on restart button
-const restartBtn = document.querySelector('.restart');
-restartBtn.addEventListener('click', function () {
+function restartGame(){
   clearTimeout(timer);
   startNewGame();
-});
+}
+
+// Added event listener on restart button
+function enableRestartButton(){
+  const restartBtn = document.querySelector('.restart');
+  restartBtn.addEventListener('click', restartGame);
+}
+
+// Disables restart button
+function disableRestartButton(){
+  const restartBtn = document.querySelector('.restart');
+  restartBtn.removeEventListener('click', restartGame);
+}
 
 // Removes all cards from deck
 function removeAllCards(cardsList){
@@ -70,6 +79,8 @@ function resetCards(){
 
 // After reseting the score and timer, display new card deck
 function startNewGame(){
+  enableRestartButton();
+  listenToCardClick();
   resetCards();
   resetMoves();
   resetTimerDisplay();
@@ -154,10 +165,17 @@ function updateTimer(){
  }
 
  function hideCards(){
-   openCardsArray[0].classList.remove('no-match');
-   openCardsArray[1].classList.remove('no-match');
+   console.log("i should be hiding cards...");
+   console.log(openCardsArray[0].parentNode);
+   console.log(openCardsArray[1].parentNode);
+   openCardsArray[0].parentNode.classList.remove('is-open');
+   openCardsArray[1].parentNode.classList.remove('is-open');
+   openCardsArray[0].parentNode.classList.add('is-closed');
+   openCardsArray[1].parentNode.classList.add('is-closed');
    openCards = 0;
    openCardsArray = [];
+   enableRestartButton();
+   listenToCardClick();
  }
 
  function displayFinalScore(){
@@ -222,19 +240,19 @@ function removeStar(){
  }
 
  function setNoMatch(){
-   openCardsArray[0].classList.remove('open');
-   openCardsArray[0].classList.remove('show');
-   openCardsArray[1].classList.remove('open');
-   openCardsArray[1].classList.remove('show');
+   disableRestartButton();
    openCardsArray[0].classList.add('no-match');
    openCardsArray[1].classList.add('no-match');
+   stopListeningToCardClicks();
    numberOfErrors++;
    scoreUpdate();
-   setTimeout(() => { hideCards()
-   }, 1500);
+   setTimeout(function(){
+    hideCards();
+  }, 2000);
  }
 
  function checkMatch(){
+   console.log(openCardsArray);
    if(openCardsArray[0].firstElementChild.className.includes(openCardsArray[1].firstElementChild.className)){
      setMatch();
    }
@@ -246,9 +264,8 @@ function removeStar(){
 
  // Decide which action to take on card click
  function evaluateCard(card){
-   if ((!(card.className.includes("open")) && !(card.className.includes("match")) && (openCards < 2))){
+   if (openCards < 2){
      openCards++;
-     card.className += " open show";
      openCardsArray.push(card);
    }
    if(openCards == 2){
@@ -256,13 +273,25 @@ function removeStar(){
    }
  }
 
- deck.addEventListener('click', function(event) {
-   if(event.target.nodeName == 'I'){
-     evaluateCard(event.target.parentNode);
-   }else if(event.target.nodeName == 'LI'){
-     evaluateCard(event.target);
-   }
- });
+// Stop listening to card click
+function stopListeningToCardClicks(){
+   deck.removeEventListener('click', onCardClick);
+}
+ 
+function onCardClick(){
+  console.log(event.target.parentNode);
+  let element = event.target;
+  if(element.parentNode.classList.contains("is-closed")){
+    element.parentNode.classList.remove("is-closed");
+    element.parentNode.classList.add("is-open");
+    evaluateCard(event.target.previousElementSibling);
+  }
+}
+
+// Listen to card clicked
+function listenToCardClick(){
+  deck.addEventListener('click', onCardClick);
+}
 
 /*
 *  Setting score modal buttons behaviors
