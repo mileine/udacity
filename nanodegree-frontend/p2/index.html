@@ -1,188 +1,191 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Matching Game</title>
-    <meta name="description" content="">
-    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-    <link rel="stylesheet" href="css/app.css">
+  <meta charset="utf-8">
+  <title>Memory Game</title>
+  <meta name="description" content="">
+  <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+  <link rel="stylesheet" href="css/app.css">
 </head>
+
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Memory Game</h1>
-        </header>
+  <div class="container">
+    <header>
+      <h1>Memory Game</h1>
+    </header>
 
-        <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+    <section class="score-panel">
+      <ul class="stars">
+        <li><i class="fa fa-star"></i></li>
+        <li><i class="fa fa-star"></i></li>
+        <li><i class="fa fa-star"></i></li>
+      </ul>
 
-        	<div class="moves-info">
-            <span class="moves">3</span> moves
-          </div>
-
-          <div class="timer-info">
-            <span class="minutes">--</span>:
-            <span class="seconds">--</span>
-          </div>
-
-          <div class="restart">
-        		<i class="fa fa-repeat"></i>
-        	</div>
-        </section>
-
-        <div class="deck">
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-diamond"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-paper-plane-o"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-anchor"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-bolt"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-cube"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-anchor"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-leaf"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-bicycle"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-diamond"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-bomb"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-leaf"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-bomb"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-bolt"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-bicycle"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-paper-plane-o"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-
-            <div class="card is-closed">
-              <div class="card__face card__face--open">
-                <i class="fa fa-cube"></i>
-              </div>
-              <div class="card__face card__face--closed"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="score-modal" class="score-modal">
-
-      <div class="score-modal-content">
-
-        <p>Congrats! You won! =)</p>
-
-        <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
-
-        	<div class="moves-info">
-            <span class="moves"></span> moves
-          </div>
-
-          <div class="score-timer-info">
-            <span class="minutes"></span>:
-            <span class="seconds"></span>
-          </div>
-
-        </section>
-        <div class="score-modal-buttons">
-          <button class="btn-modal-close" type="button" name="button">Close</button>
-          <button class="btn-modal-restart" type="button" name="button">Play Again! <i class="fa fa-repeat"></i></button>
-        </div>
+      <div class="moves-info">
+        <span class="moves">3</span> moves
       </div>
 
+      <div class="timer-info">
+        <span class="minutes">--</span>:
+        <span class="seconds">--</span>
+      </div>
+
+      <div class="restart">
+        <i class="fa fa-repeat"></i>
+      </div>
+    </section>
+
+    <div class="deck">
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-diamond"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-paper-plane-o"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-anchor"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-bolt"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-cube"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-anchor"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-leaf"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-bicycle"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-diamond"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-bomb"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-leaf"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-bomb"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-bolt"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-bicycle"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-paper-plane-o"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+
+      <div class="card is-closed">
+        <div class="card__face card__face--open">
+          <i class="fa fa-cube"></i>
+        </div>
+        <div class="card__face card__face--closed"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="score-modal" class="score-modal">
+
+    <div class="score-modal-content">
+
+      <p>Congrats! You won! =)</p>
+
+      <section class="score-panel">
+        <ul class="stars">
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+        </ul>
+
+        <div class="moves-info">
+          <span class="moves"></span> moves
+        </div>
+
+        <div class="score-timer-info">
+          <span class="minutes"></span>:
+          <span class="seconds"></span>
+        </div>
+
+      </section>
+      <div class="score-modal-buttons">
+        <button class="btn-modal-close" type="button" name="button">Close</button>
+        <button class="btn-modal-restart" type="button" name="button">Play Again! <i class="fa fa-repeat"></i></button>
+      </div>
     </div>
 
-    <script src="js/app.js"></script>
+  </div>
+
+  <script src="js/app.js"></script>
 </body>
+
 </html>

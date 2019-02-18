@@ -1,23 +1,23 @@
 /*
  * Global variables
  */
- const MAX_NUMBER_OF_MATCHES = 8;
+const MAX_NUMBER_OF_MATCHES = 8;
 
 // Game aux variables
- let timer;
- let seconds = 0;
- let numberOfMoves = 0;
- let numberOfMatches = 0;
- let openCards = 0;
- let openCardsArray = [];
- let numberOfErrors = 0;
+let timer;
+let seconds = 0;
+let numberOfMoves = 0;
+let numberOfMatches = 0;
+let openCards = 0;
+let openCardsArray = [];
+let numberOfErrors = 0;
 
 // UI elements
- const scoreModal = document.querySelector("#score-modal");
- const movesLabels = document.querySelectorAll(".moves");
- const minutesTxts = document.querySelectorAll(".minutes");
- const secondsTxts = document.querySelectorAll(".seconds");
- const deck = document.querySelector(".deck");
+const scoreModal = document.querySelector("#score-modal");
+const movesLabels = document.querySelectorAll(".moves");
+const minutesTxts = document.querySelectorAll(".minutes");
+const secondsTxts = document.querySelectorAll(".seconds");
+const deck = document.querySelector(".deck");
 
 /*
  * Display the cards on the page
@@ -27,46 +27,47 @@
  */
 
 // Updates cards on deck when page is loaded
- document.addEventListener("DOMContentLoaded", function(event) {
-   startNewGame();
- });
+document.addEventListener("DOMContentLoaded", function(event) {
+  startNewGame();
+});
 
-function restartGame(){
+function restartGame() {
   clearTimeout(timer);
   startNewGame();
 }
 
 // Added event listener on restart button
-function enableRestartButton(){
+function enableRestartButton() {
   const restartBtn = document.querySelector('.restart');
   restartBtn.addEventListener('click', restartGame);
 }
 
 // Disables restart button
-function disableRestartButton(){
+function disableRestartButton() {
   const restartBtn = document.querySelector('.restart');
   restartBtn.removeEventListener('click', restartGame);
 }
 
 // Removes all cards from deck
-function removeAllCards(cardsList){
-  for(const card of cardsList){
+function removeAllCards(cardsList) {
+  for (const card of cardsList) {
     card.remove();
   }
 }
 
 // Display cards on deck (after shuffling)
-function displayNewCards(cardsArray){
-  for (var i = 0; i < cardsArray.length; i++){
-    cardsArray[i].classList.remove('match');
-    cardsArray[i].classList.remove('open');
-    cardsArray[i].classList.remove('show');
+function displayNewCards(cardsArray) {
+  for (var i = 0; i < cardsArray.length; i++) {
+    if (cardsArray[i].classList.contains('is-open')) {
+      cardsArray[i].classList.remove('is-open');
+      cardsArray[i].classList.add('is-closed');
+    }
     deck.appendChild(cardsArray[i]);
   }
 }
 
 // Updates cards list for new game when page loads or when clicking on restart button
-function resetCards(){
+function resetCards() {
   let cardsList = document.querySelectorAll(".card");
   let cardsArray = Array.prototype.slice.call(cardsList);
   cardsArray = shuffle(cardsArray);
@@ -78,20 +79,22 @@ function resetCards(){
 }
 
 // After reseting the score and timer, display new card deck
-function startNewGame(){
+function startNewGame() {
   enableRestartButton();
   listenToCardClick();
   resetCards();
   resetMoves();
   resetTimerDisplay();
   resetScore();
-  timer = setInterval(() => { updateTimer()
+  timer = setInterval(() => {
+    updateTimer()
   }, 1000);
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  var currentIndex = array.length,
+    temporaryValue, randomIndex;
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
@@ -102,46 +105,45 @@ function shuffle(array) {
   return array;
 }
 
-function resetMoves(){
+function resetMoves() {
   numberOfMoves = 0;
-  for(const movesLabel of movesLabels){
+  for (const movesLabel of movesLabels) {
     movesLabel.innerText = "0";
   }
 }
 
-function resetTimerDisplay(){
+function resetTimerDisplay() {
   seconds = 0;
   updateMinutesDisplay("00");
   updateSecondsDisplay("00");
 }
 
-function updateMinutesDisplay(minStr){
-  for(const minutesTxt of minutesTxts){
+function updateMinutesDisplay(minStr) {
+  for (const minutesTxt of minutesTxts) {
     minutesTxt.innerText = minStr;
   }
 }
 
-function updateSecondsDisplay(secStr){
-  for(const secondsTxt of secondsTxts){
+function updateSecondsDisplay(secStr) {
+  for (const secondsTxt of secondsTxts) {
     secondsTxt.innerText = secStr;
   }
 }
 
-function updateTimer(){
+function updateTimer() {
   seconds++;
-  if(seconds < 60){
-    if(seconds<10)
+  if (seconds < 60) {
+    if (seconds < 10)
       updateSecondsDisplay("0" + seconds.toString());
     else
       updateSecondsDisplay(seconds.toString());
-  }
-  else{
-      let secondsTimer = seconds%60;
-      updateMinutesDisplay(Math.floor(seconds/60).toString());
-      if(secondsTimer<10)
-        updateSecondsDisplay("0" + secondsTimer.toString());
-      else
-        updateSecondsDisplay((secondsTimer).toString());
+  } else {
+    let secondsTimer = seconds % 60;
+    updateMinutesDisplay(Math.floor(seconds / 60).toString());
+    if (secondsTimer < 10)
+      updateSecondsDisplay("0" + secondsTimer.toString());
+    else
+      updateSecondsDisplay((secondsTimer).toString());
   }
 }
 
@@ -157,54 +159,61 @@ function updateTimer(){
  */
 
 
- function updateMoves(){
-   numberOfMoves++;
-   for(const movesLabel of movesLabels){
-     movesLabel.innerText = numberOfMoves;
-   }
- }
+function updateMoves() {
+  numberOfMoves++;
+  for (const movesLabel of movesLabels) {
+    movesLabel.innerText = numberOfMoves;
+  }
+}
 
- function hideCards(){
-   console.log("i should be hiding cards...");
-   console.log(openCardsArray[0].parentNode);
-   console.log(openCardsArray[1].parentNode);
-   openCardsArray[0].parentNode.classList.remove('is-open');
-   openCardsArray[1].parentNode.classList.remove('is-open');
-   openCardsArray[0].parentNode.classList.add('is-closed');
-   openCardsArray[1].parentNode.classList.add('is-closed');
-   openCards = 0;
-   openCardsArray = [];
-   enableRestartButton();
-   listenToCardClick();
- }
+function removeNoMatchStyle() {
+  let noMatchList = document.querySelectorAll('.no-match');
+  for (const node of noMatchList) {
+    node.classList.remove('no-match');
+  }
+}
 
- function displayFinalScore(){
-   scoreModal.style.display = "block";
-   clearTimeout(timer);
- }
+function hideCards() {
+  openCardsArray[0].parentNode.classList.remove('is-open');
+  openCardsArray[1].parentNode.classList.remove('is-open');
+  openCardsArray[0].parentNode.classList.add('is-closed');
+  openCardsArray[1].parentNode.classList.add('is-closed');
+  openCards = 0;
+  openCardsArray = [];
+  enableRestartButton();
+  listenToCardClick();
+  setTimeout(function() {
+    removeNoMatchStyle();;
+  }, 1000);
+}
 
- function setMatch(){
-   numberOfMatches++;
-   openCardsArray[0].classList.remove('open');
-   openCardsArray[0].classList.remove('show');
-   openCardsArray[1].classList.remove('open');
-   openCardsArray[1].classList.remove('show');
-   openCardsArray[0].classList.add('match');
-   openCardsArray[1].classList.add('match');
-   openCards = 0;
-   openCardsArray = [];
-   // check if game was won
-   if(numberOfMatches == MAX_NUMBER_OF_MATCHES){
+function displayFinalScore() {
+  scoreModal.style.display = "block";
+  clearTimeout(timer);
+}
+
+function setMatch() {
+  numberOfMatches++;
+
+  openCardsArray[0].classList.add('match');
+  openCardsArray[1].classList.add('match');
+
+  openCards = 0;
+  openCardsArray = [];
+  // check if game was won
+  if (numberOfMatches == MAX_NUMBER_OF_MATCHES) {
+    setTimeout(function() {
       displayFinalScore();
-   }
- }
+    }, 1000);
+  }
+}
 
-function resetScore(){
+function resetScore() {
   numberOfErrors = 0;
   let starErrorList = document.querySelectorAll(".fa-star-o");
   let starErrorArray = Array.prototype.slice.call(starErrorList);
-  if(starErrorArray.length > 0){
-    for (const star of starErrorList){
+  if (starErrorArray.length > 0) {
+    for (const star of starErrorList) {
       star.classList.remove('fa-star-o');
       star.classList.add('fa-star');
     }
@@ -212,15 +221,15 @@ function resetScore(){
 }
 
 
-function removeStar(){
+function removeStar() {
   let starList = document.querySelectorAll(".fa-star");
   let starArray = Array.prototype.slice.call(starList);
-  if(starArray.length === 6){
+  if (starArray.length === 6) {
     starArray[2].classList.remove('fa-star');
     starArray[2].classList.add('fa-star-o');
     starArray[5].classList.remove('fa-star');
     starArray[5].classList.add('fa-star-o');
-  } else if(starArray.length === 4){
+  } else if (starArray.length === 4) {
     starArray[1].classList.remove('fa-star');
     starArray[1].classList.add('fa-star-o');
     starArray[3].classList.remove('fa-star');
@@ -228,60 +237,60 @@ function removeStar(){
   }
 }
 
- function scoreUpdate(){
-   if((numberOfMoves <= 6) && (numberOfErrors >= 6)){
-     removeStar();
-     numberOfErrors = 0;
-   }
-   else if((numberOfMoves > 6) && (numberOfErrors >= 5)){
-     removeStar();
-     numberOfErrors = 0;
-   }
- }
+function scoreUpdate() {
+  if ((numberOfMoves <= 6) && (numberOfErrors >= 6)) {
+    removeStar();
+    numberOfErrors = 0;
+  } else if ((numberOfMoves > 6) && (numberOfErrors >= 5)) {
+    removeStar();
+    numberOfErrors = 0;
+  }
+}
 
- function setNoMatch(){
-   disableRestartButton();
-   openCardsArray[0].classList.add('no-match');
-   openCardsArray[1].classList.add('no-match');
-   stopListeningToCardClicks();
-   numberOfErrors++;
-   scoreUpdate();
-   setTimeout(function(){
+function setNoMatch() {
+  disableRestartButton();
+  openCardsArray[0].classList.add('no-match');
+  openCardsArray[1].classList.add('no-match');
+  stopListeningToCardClicks();
+  numberOfErrors++;
+  scoreUpdate();
+  setTimeout(function() {
     hideCards();
   }, 2000);
- }
+}
 
- function checkMatch(){
-   console.log(openCardsArray);
-   if(openCardsArray[0].firstElementChild.className.includes(openCardsArray[1].firstElementChild.className)){
-     setMatch();
-   }
-   else {
-     setNoMatch();
-   }
-   updateMoves();
- }
+function checkMatch() {
+  if (openCardsArray[0].firstElementChild.className.includes(openCardsArray[1].firstElementChild.className)) {
+    setMatch();
+  } else {
+    setNoMatch();
+  }
+  updateMoves();
+}
 
- // Decide which action to take on card click
- function evaluateCard(card){
-   if (openCards < 2){
-     openCards++;
-     openCardsArray.push(card);
-   }
-   if(openCards == 2){
-     checkMatch();
-   }
- }
+// Decide which action to take on card click
+function evaluateCard(card) {
+  if (openCards < 2) {
+    openCards++;
+    openCardsArray.push(card);
+  }
+  if (openCards == 2) {
+    checkMatch();
+  }
+}
+
+/*
+ *  Setting card click events
+ */
 
 // Stop listening to card click
-function stopListeningToCardClicks(){
-   deck.removeEventListener('click', onCardClick);
+function stopListeningToCardClicks() {
+  deck.removeEventListener('click', onCardClick);
 }
- 
-function onCardClick(){
-  console.log(event.target.parentNode);
+
+function onCardClick() {
   let element = event.target;
-  if(element.parentNode.classList.contains("is-closed")){
+  if (element.parentNode.classList.contains("is-closed")) {
     element.parentNode.classList.remove("is-closed");
     element.parentNode.classList.add("is-open");
     evaluateCard(event.target.previousElementSibling);
@@ -289,24 +298,22 @@ function onCardClick(){
 }
 
 // Listen to card clicked
-function listenToCardClick(){
+function listenToCardClick() {
   deck.addEventListener('click', onCardClick);
 }
 
 /*
-*  Setting score modal buttons behaviors
-*/
+ *  Setting score modal buttons behaviors
+ */
 // hide score modal
 let btnModalClose = document.querySelector(".btn-modal-close");
-btnModalClose.addEventListener('click', function(event)
-{
+btnModalClose.addEventListener('click', function(event) {
   scoreModal.style.display = "none";
 });
 
 // hide score modal and restart game
 let btnModalRestart = document.querySelector(".btn-modal-restart");
-btnModalRestart.addEventListener('click', function(event)
-{
+btnModalRestart.addEventListener('click', function(event) {
   scoreModal.style.display = "none";
   startNewGame();
 });
