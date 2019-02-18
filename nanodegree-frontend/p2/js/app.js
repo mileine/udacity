@@ -61,6 +61,9 @@ function displayNewCards(cardsArray) {
     if (cardsArray[i].classList.contains('is-open')) {
       cardsArray[i].classList.remove('is-open');
       cardsArray[i].classList.add('is-closed');
+      if(cardsArray[i].firstElementChild.classList.contains('match')){
+        cardsArray[i].firstElementChild.classList.remove('match');
+      }
     }
     deck.appendChild(cardsArray[i]);
   }
