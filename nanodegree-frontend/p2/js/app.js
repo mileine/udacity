@@ -171,6 +171,8 @@ function removeNoMatchStyle() {
   for (const node of noMatchList) {
     node.classList.remove('no-match');
   }
+  enableRestartButton();
+  listenToCardClick();
 }
 
 function hideCards() {
@@ -180,8 +182,6 @@ function hideCards() {
   openCardsArray[1].parentNode.classList.add('is-closed');
   openCards = 0;
   openCardsArray = [];
-  enableRestartButton();
-  listenToCardClick();
   setTimeout(function() {
     removeNoMatchStyle();;
   }, 1000);
@@ -247,10 +247,16 @@ function scoreUpdate() {
   }
 }
 
-function setNoMatch() {
-  disableRestartButton();
+function addNoMatchStyle(){
   openCardsArray[0].classList.add('no-match');
   openCardsArray[1].classList.add('no-match');
+}
+
+function setNoMatch() {
+  disableRestartButton();
+  setTimeout(function() {
+    addNoMatchStyle();
+  }, 700);
   stopListeningToCardClicks();
   numberOfErrors++;
   scoreUpdate();

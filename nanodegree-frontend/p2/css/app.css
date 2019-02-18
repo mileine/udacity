@@ -83,6 +83,7 @@ h1 {
   font-size: 33px;
   color: #ffffff;
   background: #02b3e4;
+  cursor: default;
 }
 
 .card.is-open {
@@ -98,7 +99,7 @@ h1 {
 }
 
 .no-match {
-  background: red;
+  background: #e22b29;
 }
 
 /*
