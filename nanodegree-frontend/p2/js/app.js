@@ -42,12 +42,6 @@ function enableRestartButton() {
   restartBtn.addEventListener('click', restartGame);
 }
 
-// Disables restart button
-function disableRestartButton() {
-  const restartBtn = document.querySelector('.restart');
-  restartBtn.removeEventListener('click', restartGame);
-}
-
 // Removes all cards from deck
 function removeAllCards(cardsList) {
   for (const card of cardsList) {
@@ -71,12 +65,14 @@ function displayNewCards(cardsArray) {
 
 // Updates cards list for new game when page loads or when clicking on restart button
 function resetCards() {
+  removeNoMatchStyle();
   let cardsList = document.querySelectorAll(".card");
   let cardsArray = Array.prototype.slice.call(cardsList);
   cardsArray = shuffle(cardsArray);
   openCards = 0;
   openCardsArray = [];
-  numberOfMatches = 0
+  numberOfMatches = 0;
+  numberOfErrors = 0;
   removeAllCards(cardsList);
   displayNewCards(cardsArray);
 }
@@ -174,7 +170,6 @@ function removeNoMatchStyle() {
   for (const node of noMatchList) {
     node.classList.remove('no-match');
   }
-  enableRestartButton();
   listenToCardClick();
 }
 
@@ -256,7 +251,6 @@ function addNoMatchStyle(){
 }
 
 function setNoMatch() {
-  disableRestartButton();
   setTimeout(function() {
     addNoMatchStyle();
   }, 700);
