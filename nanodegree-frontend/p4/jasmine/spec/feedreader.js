@@ -81,7 +81,7 @@ $(function() {
     beforeEach(function(done) {
       loadFeed(0, function() {
         done();
-      })
+      });
     })
     /* TODO: Write a test that ensures when the loadFeed
      * function is called and completes its work, there is at least
@@ -97,14 +97,26 @@ $(function() {
   });
   /* TODO: Write a new test suite named "New Feed Selection" */
   describe('New Feed Selection', function() {
+    let entriesList_n0 = '';
+    let entriesList_n1 = '';
     beforeEach(function(done) {
       loadFeed(0, function() {
+        entriesList_n0 = document.querySelectorAll('.entry');
+        done();
+      });
+      loadFeed(1, function() {
+        entriesList_n1 = document.querySelectorAll('.entry');
         done();
       })
     })
-  /* TODO: Write a test that ensures when a new feed is loaded
-   * by the loadFeed function that the content actually changes.
-   * Remember, loadFeed() is asynchronous.
-   */
- })
+    /* TODO: Write a test that ensures when a new feed is loaded
+     * by the loadFeed function that the content actually changes.
+     * Remember, loadFeed() is asynchronous.
+     */
+     it('loadFeed should bring at least a single entry within the container', function(done) {
+       const entries = document.querySelector('.entry');
+       expect(entriesList_n0).not.toEqual(entriesList_n1);
+       done();
+     });
+  })
 }());
