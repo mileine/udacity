@@ -69,7 +69,7 @@ $(function() {
     it('menu changes visibility when on icon click', function() {
       const btnMenu = document.querySelector('.menu-icon-link');
       btnMenu.click();
-      expect($('body').hasClass('')).toBe(true);
+      expect($('body').hasClass('menu-hidden')).toBe(false);
       btnMenu.click();
       expect($('body').hasClass('menu-hidden')).toBe(true);
     });
@@ -89,7 +89,7 @@ $(function() {
      * the use of Jasmine's beforeEach and asynchronous done() function.
      */
     it('loadFeed should bring at least a single entry within the container', function(done) {
-      const entries = document.querySelectorAll('.entry');
+      const entries = document.querySelectorAll('.feed .entry');
       expect(entries.length).not.toEqual(0);
       done();
     });
@@ -101,8 +101,10 @@ $(function() {
     beforeEach(function(done) {
       loadFeed(0, function() {
         entriesList_n0 = $('.feed').html();
+        console.log(entriesList_n0);
         loadFeed(1, function() {
           entriesList_n1 = $('.feed').html();
+          console.log(entriesList_n1);
           done();
         })
       })
