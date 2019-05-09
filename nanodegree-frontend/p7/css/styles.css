@@ -47,6 +47,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
+	box-sizing: border-box;
 }
 /* ====================== Navigation ====================== */
 nav {
@@ -227,7 +228,9 @@ nav h1 a {
   line-height: 1.1;
 }
 #restaurant-img {
-	width: 90%;
+	width: 100%;
+	border-top-left-radius: 25px;
+	border-bottom-right-radius: 25px;
 }
 #restaurant-address {
   font-size: 12pt;
@@ -243,13 +246,14 @@ nav h1 a {
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
+	width: 100%;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
   padding: 140px 40px 30px;
   width: 50%;
+	box-sizing: border-box;
 }
 #reviews-container {
 
@@ -268,8 +272,8 @@ nav h1 a {
 #reviews-list li {
   background-color: #fff;
   border: 2px solid #f3f3f3;
-	border-top-left-radius: 10px;
-	border-bottom-right-radius: 10px;
+	border-top-left-radius: 25px;
+	border-bottom-right-radius: 25px;
   display: block;
   list-style-type: none;
   margin: 0 0 30px;
@@ -278,21 +282,36 @@ nav h1 a {
   width: 95%;
 }
 #reviews-list li p {
-  margin: 0 0 10px;
+  margin: 10px 0 0;
 }
 
 .review-header{
-	padding: 15px 10px;
+	padding: 15px 25px;
 	background-color: #444;
   color: #aaa;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	box-sizing: border-box;
+}
+
+.review-content{
+	padding: 25px;
+	box-sizing: border-box;
 }
 
 .review-name{
 	color: #fafafa;
 	font-size: 13pt;
+}
+
+.review-rating{
+	padding: 5px 10px;
+	border-radius: 2px;
+	background-color: orange;
+	color: #fff;
+	text-transform: uppercase;
+	margin-bottom: 5px;
 }
 
 #restaurant-hours td {
@@ -321,12 +340,12 @@ nav h1 a {
 	#restaurant-container{
 		z-index: 20;
 		width: 100%;
-		padding: 330px 40px 30px;
+		padding: 330px 25px 20px 25px;
 		box-sizing: border-box;
 	}
 
 	#reviews-container {
-    padding: 30px 40px 80px;
+    padding: 20px 25px 80px 25px;
     width: 100%;
 		box-sizing: border-box;
 	}

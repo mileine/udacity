@@ -164,14 +164,19 @@ createReviewHTML = (review) => {
 
   li.appendChild(div);
 
-  const rating = document.createElement('p');
+  const divContent = document.createElement('div');
+  divContent.classList.add('review-content');
+
+  const rating = document.createElement('span');
   rating.innerHTML = `Rating: ${review.rating}`;
-  rating.classList.add('rating');
-  li.appendChild(rating);
+  rating.classList.add('review-rating');
+  divContent.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
-  li.appendChild(comments);
+  divContent.appendChild(comments);
+
+  li.appendChild(divContent);
 
   return li;
 }
