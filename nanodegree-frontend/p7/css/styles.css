@@ -17,14 +17,36 @@ ul, li {
 	font-size: 10pt;
 	color: #333;
 }
+
 a {
 	color: orange;
 	text-decoration: none;
 }
-a:hover, a:focus {
+
+button {
+	color: #fff;
+	background-color: orange;
+	border: none;
+	padding: .5em;
+	margin: 1rem auto;
+	font-size: 1.2rem;
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+button:hover, button:focus {
+	background-color: darkorange;
+	box-shadow: 0 0 2px 3px rgba(0,0,0,0.2);
+}
+
+select:hover, select:focus,
+a:hover, a:focus{
 	color: #3397db;
 	text-decoration: none;
+	box-shadow: 0 0 4px 6px rgba(0,0,0,0.2);
 }
+
 a img{
 	border: none 0px #fff;
 }
